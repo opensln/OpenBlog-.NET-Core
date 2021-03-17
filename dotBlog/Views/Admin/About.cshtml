@@ -1,0 +1,67 @@
+﻿@model dotBlog.Models.AdminViewModels.AboutViewModel
+
+<div class="container-fluid">
+    <h1 class="mt-4">Create</h1>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card mb-4">
+                <form id="CreatePostForm" asp-controller="Admin" asp-action="UpdateAbout" method="post" enctype="multipart/form-data">
+                    <div class="card-header">
+                        <i class="fas fa-pen-fancy mr-1"></i>
+                        Update your About Me info
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label asp-for="HeaderImage"></label>
+                            <div class="custom-file">
+                                <input asp-for="HeaderImage" class="custom-file-input" accept="Image/*" />
+                                <label class="custom-file-label">Choose Image</label>
+                            </div>
+                            <span asp-validation-for="HeaderImage" class="text-danger"></span>
+
+
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="SubHeader"></label>
+                            <input asp-for="SubHeader" class="form-control" required />
+                            <span asp-validation-for="SubHeader" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Content"></label>
+                            <textarea asp-for="Content" class="form-control textarea" rows="8"></textarea>
+                            <span asp-validation-for="Content" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                    <div class="card-footer">
+                        <div class="form-group">
+                            <button class="btn btn-primary" type="submit">Submit</button>
+                            <a asp-controller="Home" asp-action="Author" asp-route-authorId="@Model.ApplicationUser.Id" class="bton btn-secondary float-right">View</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.ckeditor.com/ckeditor5/26.0.0/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('.textarea'))
+            .then(editor => {
+                console.log(editor);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        $(".custom-file-input").on("change", function () {
+            var filename = (this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(filename);
+        });
+    </script>
+
+}
